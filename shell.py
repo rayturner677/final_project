@@ -21,19 +21,19 @@ def main():
     inventory = {
         'camaro': {
             'name': 'camaro',
-            'price': 180 * .07,
+            'price': 180 * 1.07,
             'stock': 4,
             'replacement': 150
         },
         '4-wheeler': {
             'name': '4-wheeler',
-            'price': 29 * .07,
+            'price': 29 * 1.07,
             'stock': 15,
             'replacement': 150,
         },
         'skeet jet': {
             'name': 'skeet jet',
-            'price': 43 * .07,
+            'price': 43 * 1.07,
             'stock': 8,
             'replacement': 37
         }
@@ -45,7 +45,14 @@ def main():
     name = input("What's you name?").strip()
     print('camaro, 4-wheeler, skeet jet')
     receipt = []
+
     while True:
+        if inventory['camaro']['stock'] == 0:
+            break
+        if inventory['4-wheeler']['stock'] == 0:
+            break
+        if inventory['skeet jet']['stock'] == 0:
+            break
         while True:
             user_choice = input('What would you like to rent today ' + name +
                                 '?').strip().lower()
@@ -68,7 +75,11 @@ def main():
                 break
             else:
                 print('invalid request')
-                break
+                return
+
+    while True:
+        print('alive')
+        break
 
     print(receipt)
 
