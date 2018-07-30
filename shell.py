@@ -21,19 +21,20 @@ def add_to_stock(inventory, item_name):
 
 
 def find_replacement(inventory, item_name):
-    return
+    inventory[item_name]['replacement'] * 1.10
 
 
-def get_receipt(inventory, item_name):
+def get_total(inventory, item_name, items):
     receipt = []
-    receipt.append(item_name)
-    price = inventory[item_name]['price']
-    replacement = inventory[item_name]['replacement']
-    return '{} {} {}'.format('total:', price, replacement)
+    total = 0
+    for item in items:
+        receipt.append(item)
+    for item in items:
+        total += inventory[item_name]['price']
+    return receipt
 
 
 def main():
-    read = disk.open_file
     inventory = {
         'camaro': {
             'name': 'camaro',
@@ -54,37 +55,47 @@ def main():
             'replacement': 5000
         }
     }
-    sign_in = input('         Employee(1) or Costumer:(2)').strip().lower()
+    sign_in = input('         Employee(1) or Costumer(2):').strip().lower()
     name = input("What's you name?").strip()
-    print('camaro, 4-wheeler, jet ski')
-    receipt = []
+    with open('inventory.txt', 'r') as file:
+        data = file.readlines()
+        print(data)
+
     while True:
         if sign_in == '1':
-            user_choice = input('What would you like to rent today ' + name +
-                                '?').strip().lower()
+            user_choice = input(
+                'What would you like to rent today ' + name +
+                '?', ).strip().lower()
+            user_days = input(
+                'How long would you like to rent our merchandise?')
             if in_stock(inventory, user_choice):
-                get_receipt(inventory, user_choice)
                 inventory[user_choice]['stock'] -= 1
                 print(inventory[user_choice])
-                print('cost:', price_with_tax(inventory, user_choice))
+                print('taxed :', price_with_tax(inventory, user_choice))
+                cs = inventory[user_choice]['price'] * user_days.isdigit()
+                print(cs)
             elif user_choice == 'done':
                 break
             else:
                 print('Not in stock')
-
+        print('camaro, 4-wheeler, jet ski')
         if sign_in == '2':
             user_choice = input('What would you like to rent today ' + name +
                                 '?').strip().lower()
+            user_days = input(
+                'How long would you like to rent our merchandise?')
             if in_stock(inventory, user_choice):
-                get_receipt(inventory, user_choice)
                 inventory[user_choice]['stock'] -= 1
                 print(inventory[user_choice])
                 print('cost:', price_with_tax(inventory, user_choice))
+                cs = inventory[user_days]['price'] * user_days.isdigit()
+                print(cs)
+
             elif user_choice == 'done':
                 break
             else:
                 print('Not in stock')
-
+    receipt = get_total(inventory, item_name, items)
     print(receipt)
 
 
