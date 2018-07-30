@@ -21,7 +21,7 @@ def add_to_stock(inventory, item_name):
 
 
 def find_replacement(inventory, item_name):
-    inventory[item_name]['replacement'] * 1.10
+    return inventory[item_name]['replacement'] * 1.10
 
 
 def get_total(inventory, item_name, items):
@@ -32,6 +32,7 @@ def get_total(inventory, item_name, items):
     for item in items:
         total += inventory[item_name]['price']
     return receipt
+    print(receipt)
 
 
 def main():
@@ -55,8 +56,12 @@ def main():
             'replacement': 5000
         }
     }
+
+    print('To exit enter done.')
+
     sign_in = input('         Employee(1) or Costumer(2):').strip().lower()
     name = input("What's you name?").strip()
+    print("Deposit will be refunded with return.")
     with open('inventory.txt', 'r') as file:
         data = file.readlines()
         print(data)
@@ -72,9 +77,12 @@ def main():
                 inventory[user_choice]['stock'] -= 1
                 print(inventory[user_choice])
                 print('taxed :', price_with_tax(inventory, user_choice))
-                cs = inventory[user_choice]['price'] * user_days.isdigit()
-                print(cs)
+                cost_indays = inventory[user_choice]['price'] * user_days.isdigit(
+                )
+                print('cost with days rented:', cost_indays)
             elif user_choice == 'done':
+                break
+            elif user_days == '':
                 break
             else:
                 print('Not in stock')
@@ -86,25 +94,29 @@ def main():
                 'How long would you like to rent our merchandise?')
             if in_stock(inventory, user_choice):
                 inventory[user_choice]['stock'] -= 1
-                print(inventory[user_choice])
-                print('cost:', price_with_tax(inventory, user_choice))
-                cs = inventory[user_days]['price'] * user_days.isdigit()
-                print(cs)
-
+                taxed = price_with_tax(inventory, user_choice)
+                cost_indays = inventory[user_choice]['price'] * user_days.isdigit(
+                )
+                print('taxed:', price_with_tax(inventory, user_choice))
+                print('cost with days rented:', cost_indays)
             elif user_choice == 'done':
                 break
             else:
                 print('Not in stock')
-    receipt = get_total(inventory, item_name, items)
-    print(receipt)
+        taxed = price_with_tax(inventory, user_choice)
+        cost_indays = inventory[user_choice]['price'] * int(user_days)
+        replacement = find_replacement(inventory, user_choice)
+        total = taxed + cost_indays + replacement
+        print('total:', total)
 
 
 # def history(payment,  amount):
 #     time = datetime.now()
 #     text = '/n{}, {}, {}' .format(time , item, amount)
 
-# with open('history.txt', 'w') as file:
-#         file.write(text)
+# with open('history.txt', 'a') as file:
+#     data = file.write(text)
+#     print(data)
 
 if __name__ == '__main__':
     main()
