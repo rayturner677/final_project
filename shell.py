@@ -71,9 +71,9 @@ def main():
             user_choice = input(
                 'What would you like to rent today ' + name +
                 '?', ).strip().lower()
-            user_days = input(
-                'How long would you like to rent our merchandise?')
             if in_stock(inventory, user_choice):
+                user_days = input(
+                    'How long would you like to rent our merchandise?')
                 inventory[user_choice]['stock'] -= 1
                 print(inventory[user_choice])
                 print('taxed :', price_with_tax(inventory, user_choice))
@@ -99,6 +99,12 @@ def main():
                 )
                 print('taxed:', price_with_tax(inventory, user_choice))
                 print('cost with days rented:', cost_indays)
+                time = datetime.now()
+                text = '/n{}, {}, {}'.format(
+                    time, inventory[user_choice]['name'], total)
+                with open('history.txt', 'a') as file:
+                    data = file.write(text)
+                    print(data)
             elif user_choice == 'done':
                 break
             else:
@@ -109,14 +115,6 @@ def main():
         total = taxed + cost_indays + replacement
         print('total:', total)
 
-
-# def history(payment,  amount):
-#     time = datetime.now()
-#     text = '/n{}, {}, {}' .format(time , item, amount)
-
-# with open('history.txt', 'a') as file:
-#     data = file.write(text)
-#     print(data)
 
 if __name__ == '__main__':
     main()
