@@ -1,4 +1,3 @@
-name, price
-camaro, 180
-4-wheeler, 29
-skeet jet, 43
+camaro, 180, 4, 40000
+4-wheeler, 29, 15, 5000
+jet ski, 43, 8, 37, 4000
