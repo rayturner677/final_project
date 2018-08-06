@@ -1,4 +1,3 @@
-import core
 import disk
 from datetime import datetime
 
@@ -21,7 +20,7 @@ def add_to_stock(inventory, item_name):
 
 
 def find_replacement(inventory, item_name):
-    return inventory[item_name]['replacement'] * 1.10
+    return int(inventory[item_name]['replacement']) * .10
 
 
 def get_total(inventory, item_name, items):
@@ -36,36 +35,28 @@ def get_total(inventory, item_name, items):
 
 
 def main():
-    inventory = {
-        'camaro': {
-            'name': 'camaro',
-            'price': 180,
-            'stock': 4,
-            'replacement': 40000
-        },
-        '4-wheeler': {
-            'name': '4-wheeler',
-            'price': 29,
-            'stock': 15,
-            'replacement': 6000,
-        },
-        'jet ski': {
-            'name': 'jet ski',
-            'price': 43,
-            'stock': 8,
-            'replacement': 5000
-        }
-    }
-
-    print('To exit enter done.')
 
     sign_in = input('         Employee(1) or Costumer(2):').strip().lower()
     name = input("What's you name?").strip()
+    print('To exit enter done.')
+
     print("Deposit will be refunded with return.")
     with open('inventory.txt', 'r') as file:
         data = file.readlines()
         print(data)
-
+    inventory = {}
+    for item_info in data:
+        items = item_info.split(',')
+        names = items[0].strip()
+        price = int(items[1].strip())
+        stock = int(items[2].strip())
+        replacement = items[3].strip()
+        inventory[names] = {
+            'name': names,
+            'price': price,
+            'stock': stock,
+            'replacement': replacement
+        }
     while True:
         if sign_in == '1':
             user_choice = input(
