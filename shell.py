@@ -46,13 +46,13 @@ def main():
         print(data)
     inventory = {}
     for item_info in data:
-        items = item_info.split(',')
-        names = items[0].strip()
-        price = int(items[1].strip())
-        stock = int(items[2].strip())
-        replacement = items[3].strip()
-        inventory[names] = {
-            'name': names,
+        item = item_info.split(',')
+        item_name = item[0].strip()
+        price = int(item[1].strip())
+        stock = int(item[2].strip())
+        replacement = item[3].strip()
+        inventory[item_name] = {
+            'name': item_name,
             'price': price,
             'stock': stock,
             'replacement': replacement
@@ -75,7 +75,7 @@ def main():
                 taxed = price_with_tax(inventory, user_choice)
                 replacement = find_replacement(inventory, user_choice)
                 cost_indays = inventory[user_choice]['price'] * int(user_days)
-                total = taxed + cost_indays + replacement
+                total = round(taxed + cost_indays + replacement, 2)
                 text = '\n{}, {}, {}'.format(
                     time, inventory[user_choice]['name'], total)
                 with open('history.txt', 'a') as file:
