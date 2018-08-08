@@ -24,3 +24,19 @@ def test_find_replacement():
 
     assert inventory['raspberry']['replacement'] == 25
     assert result == 2.5
+
+
+def test_in_stock_true():
+    inventory = {'raspberry': {'stock': 25}}
+
+    result = core.in_stock(inventory, 'raspberry')
+
+    assert result is True
+
+
+def test_in_stock_false():
+    inventory = {'hardwear': {'stock': 0}}
+
+    result = core.in_stock(inventory, 'hardwear')
+
+    assert result is False
