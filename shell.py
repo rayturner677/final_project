@@ -11,6 +11,7 @@ def print_inventory(inventory):
             item['stock'],
             item['replacement'],
         ))
+    return
 
 
 def get_name():
@@ -20,6 +21,7 @@ def get_name():
 
 def sign_in():
     while True:
+        print()
         answer = input('         Employee(1) or Costumer(2):').strip().lower()
         if answer in ['1', '2']:
             return answer
@@ -28,21 +30,26 @@ def sign_in():
 
 
 def rent_or_return(name):
-    print('Would you like to [rent] or [return] today ' + name + '?')
+    print()
+    print('\nWould you like to [rent] or [return] today ' + name + '?')
+    print('\nEnter [done] if you want to exit application.')
     while True:
         answer = input('>>> ').lower().replace('[', '').replace(']',
                                                                 '').strip()
         if answer in ['rent', 'return']:
             return answer
+        elif answer == 'done':
+            exit()
         else:
             print("Invalid response.")
 
 
 def get_rental_item(inventory, name):
     print('What would you like to rent?')
-    print(' '.join(inventory.keys()))
+    print(', '.join(inventory.keys()))
     while True:
-        answer = input('>>> ')
+        answer = input('>>> ').lower().replace('[', '').replace('[',
+                                                                '').strip()
         if answer in inventory.keys():
             if core.in_stock(inventory, answer):
                 return answer
@@ -54,7 +61,7 @@ def get_rental_item(inventory, name):
 
 def user_days():
     while True:
-        answer = input('How long would you like to rent our merchandise?')
+        answer = input('How long would you like to rent our merchandise? ')
         if answer.isdigit():
             return int(answer)
         else:
@@ -69,7 +76,7 @@ def print_receipt(name, item, days, cost, tax, deposit, total):
     \tTax: ${:.2f}
     \tDeposit: ${:.2f}
     TOTAL: ${:.2f}
-    ''')
+    '''.format(name, item, days, cost, tax, deposit, total))
 
 
 def rental_shell(inventory, name):
@@ -85,13 +92,14 @@ def rental_shell(inventory, name):
 
 
 # prints out instructions for this program
-# def instructions():
-#     print('\nTo exit enter done.')
-#     print('\n' "Deposit will be refunded with return.")
+def instructions():
+    print('\nTo exit enter done.')
+    print('\n' "Deposit will be refunded with return.")
+
 
 # def return_choice():
 #     while True:
-#     answer = input('How long would you like to rent our merchandise?')
+#         answer = input('How long would you like to rent our merchandise?')
 #     if answer.isdigit():
 #         return answer
 #     else:
@@ -104,15 +112,19 @@ def main():
     print_inventory(inventory)
     decision = sign_in()
 
+    # decision 1 == employee
     while True:
         if decision == '1':
-            # employee stuff
-            # womp womp need to add more here later
-            print('still working on this...')
+            decision = rent_or_return(name)
+            if decision == 'rent':
+                rental_shell(inventory, name)
+        # decision 2 == customer
         if decision == '2':
             decision = rent_or_return(name)
             if decision == 'rent':
                 rental_shell(inventory, name)
+            elif decision == 'return':
+                core.return_item(inventory, user_choice)
 
             # elif rent_or_return() == 'return':
             #     return_choice()
@@ -142,10 +154,8 @@ def main():
             #     total = round(taxed + cost_indays + replacement, 2)
             #     print('total:', total)
             #     disk.write_file(inventory, user_choice, user_days)
-            elif user_choice() == 'done':
+            elif decision == 'done':
                 break
-            else:
-                print('Not in stock')
 
 
 if __name__ == '__main__':

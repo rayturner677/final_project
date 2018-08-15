@@ -21,8 +21,8 @@ def read_file():
     return inventory
 
 
-def write_history_file(inventory, user_choice, user_days, cost, deposit):
+def write_history_file(inventory, rental_item, user_days, cost, deposit):
     time = datetime.now()
-    text = '\n{}, {}, {}, {}'.format(time, user_choice, cost, deposit)
+    text = '\n{}, {}, {}, {}'.format(time, rental_item, cost, deposit)
     with open('history.txt', 'a') as file:
         data = file.write(text)

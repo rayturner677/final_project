@@ -2,17 +2,17 @@ import core
 
 
 def test_price_of_pizza():
-    inventory = {'pizza': {'price': 10}}
+    cost = 70
 
-    result = core.price_with_tax(inventory, 'pizza')
+    result = core.get_tax(cost)
 
-    assert result == 10.7
+    assert result == 4.9
 
 
 def test_add_to_stock():
     inventory = {'hardwear': {'stock': 7}}
 
-    result = core.add_to_stock(inventory, 'hardwear')
+    result = core.return_item(inventory, 'hardwear')
 
     assert inventory['hardwear']['stock'] == 8
 
@@ -20,9 +20,8 @@ def test_add_to_stock():
 def test_find_replacement():
     inventory = {'raspberry': {'replacement': 25}}
 
-    result = core.find_replacement(inventory, 'raspberry')
+    result = core.get_deposit(inventory, 'raspberry')
 
-    assert inventory['raspberry']['replacement'] == 25
     assert result == 2.5
 
 
@@ -40,3 +39,11 @@ def test_in_stock_false():
     result = core.in_stock(inventory, 'hardwear')
 
     assert result is False
+
+
+def test_rent_item():
+    inventory = {'brickcity': {'stock': 5}}
+
+    result = core.rent_item(inventory, 'brickcity')
+
+    assert inventory['brickcity']['stock'] == 4
