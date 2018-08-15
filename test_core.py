@@ -9,6 +9,15 @@ def test_price_of_pizza():
     assert result == 4.9
 
 
+def test_item_cost():
+    inventory = {'big rocks': {'price': 1}}
+    days = 7
+
+    result = core.item_cost(inventory, 'big rocks', days)
+
+    assert result == 7
+
+
 def test_add_to_stock():
     inventory = {'hardwear': {'stock': 7}}
 
