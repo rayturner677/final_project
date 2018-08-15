@@ -73,10 +73,12 @@ def return_choice():
 def main():
     inventory = disk.read_file()
     print_inventory(inventory)
-    
 
     while True:
         if sign_in() == '1':
+            # employee stuff
+            # womp womp need to add more here later
+        if sign_in == '2':
             rent_or_return()
             if rent_or_return() == 'rent':
                 user_choice()
@@ -105,7 +107,6 @@ def main():
                 break
             else:
                 print('Not in stock')
-        if sign_in == '2':
             print(inventory.keys())
             user_choice()
                                  '?').strip().lower()
