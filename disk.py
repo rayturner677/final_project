@@ -21,14 +21,8 @@ def read_file():
     return inventory
 
 
-def write_file(inventory, user_choice, user_days):
-    taxed = core.price_with_tax(inventory, user_choice)
-    cost_indays = inventory[user_choice]['price'] * int(user_days)
-    replacement = core.find_replacement(inventory, user_choice)
-    total = round(taxed + cost_indays + replacement, 2)
+def write_history_file(inventory, user_choice, user_days, cost, deposit):
     time = datetime.now()
-
-    text = '\n{}, {}, {}'.format(time, inventory[user_choice]['name'], total)
-
+    text = '\n{}, {}, {}, {}'.format(time, user_choice, cost, deposit)
     with open('history.txt', 'a') as file:
         data = file.write(text)
