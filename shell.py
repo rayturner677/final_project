@@ -11,7 +11,6 @@ def print_inventory(inventory):
             item['stock'],
             item['replacement'],
         ))
-    return
 
 
 def get_name():
@@ -107,7 +106,8 @@ def instructions():
 
 
 def main():
-    inventory = disk.read_file()
+    inventory = disk.read_file('inventory.txt')
+    inventory = core.make_inv(inventory)
     name = get_name()
     print_inventory(inventory)
     decision = sign_in()

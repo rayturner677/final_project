@@ -2,23 +2,15 @@ from datetime import datetime
 import core
 
 
-def read_file():
-    with open('inventory.txt', 'r') as file:
+def read_file(filename):
+    with open(filename, 'r') as file:
+        file.readline()
         data = file.readlines()
-    inventory = {}
-    for item_info in data:
-        item = item_info.split(',')
-        item_name = item[0].strip()
-        price = int(item[1].strip())
-        stock = int(item[2].strip())
-        replacement = int(item[3].strip())
-        inventory[item_name] = {
-            'name': item_name,
-            'price': price,
-            'stock': stock,
-            'replacement': replacement
-        }
-    return inventory
+        return data
+
+
+def new_inventory(inventory):
+    with open('inventory.txt', 'w') as file:
 
 
 def write_history_file(inventory, rental_item, user_days, cost, deposit):

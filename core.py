@@ -1,3 +1,26 @@
+def make_inv(data):
+    inventory = {}
+    for item_info in data:
+        item = item_info.split(',')
+        item_name = item[0].strip()
+        price = int(item[1].strip())
+        stock = int(item[2].strip())
+        replacement = int(item[3].strip())
+        inventory[item_name] = {
+            'name': item_name,
+            'price': price,
+            'stock': stock,
+            'replacement': replacement
+        }
+    return inventory
+
+
+def updated_inv(inventory):
+
+    for item in inventory:
+        item
+
+
 def in_stock(inventory, item_name):
     if item_name in inventory and inventory[item_name]['stock'] > 0:
         return True
